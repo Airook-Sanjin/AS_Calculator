@@ -1,41 +1,50 @@
-let clearbtn = document.getElementById("clear");
-let deletebtn = document.getElementById("delete");
-let exponent = document.getElementById("exponent");
-let divide = document.getElementById("divide");
-let sevenbtn = document.getElementById("7");
-let eightbtn = document.getElementById("8");
-let ninebtn = document.getElementById("9");
-let multiply = document.getElementById("multiply");
-let fourbtn = document.getElementById("4");
-let fivebtn = document.getElementById("5");
-let sixbtn = document.getElementById("6");
-let minusbtn = document.getElementById("minus");
-let onebtn = document.getElementById("1");
-let twobtn = document.getElementById("2");
-let threebtn = document.getElementById("3");
-let plusbtn = document.getElementById("plus");
-let zerobtn = document.getElementById("0");
-let equalbtn = document.getElementById("equal");
-let dotbtn = document.getElementById("dot");
-let split = document.getElementById("split");
-let numberinp = document.getElementById("number");
-let prenumber = document.createElement("p");
-let radic = document.getElementById("radic");
-let sqr = document.getElementById("sqr");
-let dot = document.getElementById("dot");
-let percent = document.getElementById("percent");
+const buttonIds = [
+  "clear",
+  "delete",
+  "exponent",
+  "divide",
+  "seven",
+  "eight",
+  "nine",
+  "multiply",
+  "four",
+  "five",
+  "six",
+  "minus",
+  "one",
+  "two",
+  "three",
+  "plus",
+  "zero",
+  "equal",
+  "dot",
+  "split",
+  "radic",
+  "sqr",
+  "dot",
+  "percent",
+  "equal"
+];
+const button = {};
+buttonIds.forEach((id) => {
+  button[id] = document.getElementById(id);
+});
+const split = document.getElementById("split");
+const prenumber = document.createElement("p");
+const numberInp = document.getElementById("number");
 prenumber.style.color = "hsl(0,0%,80%)";
 
 let clicked = false;
 var firstNumber = [];
 var secondNumber = [];
+
 function numberButtonClick(number) {
   if (!clicked) {
     firstNumber.push(number);
-    numberinp.innerHTML = firstNumber.join("");
+    numberInp.innerHTML = firstNumber.join("");
   } else if (clicked) {
     secondNumber.push(number);
-    numberinp.innerHTML = secondNumber.join("");
+    numberInp.innerHTML = secondNumber.join("");
   }
 }
 function operatorButtonClick(op) {
@@ -48,78 +57,82 @@ function operatorButtonClick(op) {
       case "*":
         prenumber.innerHTML = firstNumber.join("") + " " + operator;
         split.appendChild(prenumber);
-        numberinp.innerHTML = "";
+        numberInp.innerHTML = "";
         clicked = true;
         break;
     }
   }
 }
 
-onebtn.addEventListener("click", function () {
+button.one.addEventListener("click", function () {
   numberButtonClick("1");
 });
 
-twobtn.addEventListener("click", function () {
+button.two.addEventListener("click", function () {
   numberButtonClick("2");
 });
 
-threebtn.addEventListener("click", function () {
+button.three.addEventListener("click", function () {
   numberButtonClick("3");
 });
 
-fourbtn.addEventListener("click", function () {
+button.four.addEventListener("click", function () {
   numberButtonClick("4");
 });
 
-fivebtn.addEventListener("click", function () {
+button.five.addEventListener("click", function () {
   numberButtonClick("5");
 });
 
-sixbtn.addEventListener("click", function () {
+button.six.addEventListener("click", function () {
   numberButtonClick("6");
 });
 
-sevenbtn.addEventListener("click", function () {
+button.seven.addEventListener("click", function () {
   numberButtonClick("7");
 });
 
-eightbtn.addEventListener("click", function () {
+button.eight.addEventListener("click", function () {
   numberButtonClick("8");
 });
 
-ninebtn.addEventListener("click", function () {
+button.nine.addEventListener("click", function () {
   numberButtonClick("9");
 });
-dot.addEventListener("click", function () {
+button.dot.addEventListener("click", function () {
   numberButtonClick(".");
 });
-zerobtn.addEventListener("click", function () {
+button.zero.addEventListener("click", function () {
   numberButtonClick("0");
 });
-clearbtn.addEventListener("click", function () {
+
+button.clear.addEventListener("click", function () {
   firstNumber.splice(0);
   secondNumber.splice(0);
   clicked = false;
-  numberinp.innerHTML = firstNumber;
+  numberInp.innerHTML = firstNumber;
   prenumber.innerHTML = secondNumber;
 });
-radic.addEventListener("click", function () {
+
+button.radic.addEventListener("click", function () {
   let num1 = Number(firstNumber.join(""));
   switch (true) {
     case num1 >= 0:
       let sqrtresult = Math.sqrt(num1);
       prenumber.innerHTML = "√(" + firstNumber.join("") + ") = ";
       split.appendChild(prenumber);
-      numberinp.innerHTML = sqrtresult.toString();
+      numberInp.innerHTML = sqrtresult.toString();
       firstNumber = [sqrtresult.toString()];
       secondNumber = [];
       clicked = false;
       break;
+    case !clicked:
+      numberInp.innerHTML = "error";
     default:
-      numberinp.innerHTML = "error";
+      numberInp.innerHTML = "error";
   }
 });
-sqr.addEventListener("click", function () {
+button.sqr.addEventListener("click", function () {
   let num1 = Number(firstNumber.join(""));
   switch (true) {
     case num1 >= 0:
@@ -127,17 +140,17 @@ sqr.addEventListener("click", function () {
 
       prenumber.innerHTML = "sqr (" + firstNumber.join("") + ") = ";
       split.appendChild(prenumber);
-      numberinp.innerHTML = sqrsum.toString();
+      numberInp.innerHTML = sqrsum.toString();
       firstNumber = [sqrsum.toString()];
       secondNumber = [];
       clicked = false;
       break;
     default:
-      numberinp.innerHTML = "error";
+      numberInp.innerHTML = "error";
       break;
   }
 });
-percent.addEventListener("click", function () {
+button.percent.addEventListener("click", function () {
   let num1 = Number(firstNumber.join(""));
   switch (true) {
     case num1 >= 0:
@@ -145,7 +158,7 @@ percent.addEventListener("click", function () {
       prenumber.innerHTML = percentsum.toString();
       firstNumber = [percentsum.toString()];
       secondNumber = [];
-      numberinp.innerHTML = firstNumber;
+      numberInp.innerHTML = firstNumber;
       firstNumber = [];
       clicked = false;
       break;
@@ -153,7 +166,8 @@ percent.addEventListener("click", function () {
       numberinp.innerHTML = "error";
   }
 });
-equalbtn.addEventListener("click", function () {
+
+button.equal.addEventListener("click", function () {
   let num1 = Number(firstNumber.join(""));
   let num2 = Number(secondNumber.join(""));
   let sum;
@@ -174,31 +188,31 @@ equalbtn.addEventListener("click", function () {
       sum = "error";
   }
   prenumber.innerHTML = num1 + " " + operator + " " + num2 + " " + "=";
-  numberinp.innerHTML = sum.toString();
+  numberInp.innerHTML = sum.toString();
 });
-plusbtn.addEventListener("click", function () {
+button.plus.addEventListener("click", function () {
   operatorButtonClick("+");
 });
-minusbtn.addEventListener("click", function () {
+button.minus.addEventListener("click", function () {
   operatorButtonClick("-");
 });
-multiply.addEventListener("click", function () {
+button.multiply.addEventListener("click", function () {
   operatorButtonClick("*");
 });
-divide.addEventListener("click", function () {
+button.divide.addEventListener("click", function () {
   operatorButtonClick("÷");
 });
 
-deletebtn.addEventListener("click", function () {
+button.delete.addEventListener("click", function () {
   if (!clicked) {
     firstNumber.pop();
     firstNumber = firstNumber.join(``);
-    numberinp.innerHTML = firstNumber;
+    number.innerHTML = firstNumber;
     firstNumber = firstNumber.split("");
   } else if (clicked) {
     secondNumber.pop();
     secondNumber = secondNumber.join(``);
-    numberinp.innerHTML = secondNumber;
+    number.innerHTML = secondNumber;
     secondNumber = secondNumber.split("");
   }
 });
