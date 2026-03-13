@@ -7,10 +7,10 @@ body{
     background-color:hsl(0, 0%, 0%);
 }
 :root{
-    --background-color:light-dark(white,black);
+    --background-color:light-dark(hsl(0, 0%, 95%),hsl(0, 0%, 0%));
     --text-color:light-dark(black,white);
-    --button: light-dark(#e0e0e0,#333 );
-    --button-text:light-dark(hsl(0, 0%, 100%),rgb(0, 0, 0));
+    --button: light-dark(hsl(0, 0%, 100%),hsl(0, 0%, 11%) );
+    --button-text:light-dark(hsl(0, 0%, 0%),rgb(255, 255, 255));
     --prenumber-text:light-dark(hsl(0,0%,20%),hsl(0,0%,80%))
 }
 
@@ -39,7 +39,7 @@ body{
     display: flex;
     width: 100%;
     color: var(--text-color);
-    font-family: Ndot82;
+    font-family: Ndot57;
 }
 
 .screen{
@@ -47,7 +47,7 @@ body{
     flex-direction: column;
     justify-content:flex-end;
     align-items: end;
-    background-color: hsl(0, 0%, 47%, .5);
+    background-color: hsla(0, 0%, 47%, 0);
     height: 30svh;
     color: var(--text-color);
     font-family: Ndot57;
@@ -69,11 +69,11 @@ body{
     width:100%;
     max-width: 16rem;
     max-height: 16rem;
-
-    font-family: Inter-reg;
-    font-size: 25px;
+    border:none;
+    font-family: Ndot57;
+    font-size: 50px;
     /* font-weight: 600; */
-    background-color: hsl(105, 2%, 45%);
+    background-color: var(--button);
     border-radius: 60%;
     color:var(--button-text);
 }
@@ -85,14 +85,20 @@ body{
     gap:.20rem;
 }
 .rows .operator{
-    background-color: hsl(0, 99%, 40%);
+    background-color: hsl(357, 79%, 47%);
+}
+.rows .operator:hover{
+    background-color: hsl(357, 79%, 42%);
+}
+.rows .operator:active{
+    background-color: hsl(357, 79%, 37%);
 }
 
 button:hover{
     background-color: hsl(105, 2%, 45%,.5);
 }
 button:active{
-    background-color: hsl(105, 2%, 65%);
+    background-color: hsl(0, 0%, 50%);
 }
 
 @media (min-width: 1024px) {
