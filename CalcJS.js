@@ -19,8 +19,7 @@ const buttonIds = [
   "equal",
   "dot",
   "split",
-  "radic",
-  "sqr",
+  "para",
   "dot",
   "percent",
   "equal"
@@ -29,6 +28,7 @@ const button = {};
 buttonIds.forEach((id) => {
   button[id] = document.getElementById(id);
 });
+
 const split = document.getElementById("split");
 const prenumber = document.createElement("p");
 const numberInp = document.getElementById("number");
@@ -114,42 +114,42 @@ button.clear.addEventListener("click", function () {
   prenumber.innerHTML = secondNumber;
 });
 
-button.radic.addEventListener("click", function () {
-  let num1 = Number(firstNumber.join(""));
-  switch (true) {
-    case num1 >= 0:
-      let sqrtresult = Math.sqrt(num1);
-      prenumber.innerHTML = "√(" + firstNumber.join("") + ") = ";
-      split.appendChild(prenumber);
-      numberInp.innerHTML = sqrtresult.toString();
-      firstNumber = [sqrtresult.toString()];
-      secondNumber = [];
-      clicked = false;
-      break;
-    case !clicked:
-      numberInp.innerHTML = "error";
-    default:
-      numberInp.innerHTML = "error";
-  }
-});
-button.sqr.addEventListener("click", function () {
-  let num1 = Number(firstNumber.join(""));
-  switch (true) {
-    case num1 >= 0:
-      let sqrsum = num1 * num1;
+// button.radic.addEventListener("click", function () {
+//   let num1 = Number(firstNumber.join(""));
+//   switch (true) {
+//     case num1 >= 0:
+//       let sqrtresult = Math.sqrt(num1);
+//       prenumber.innerHTML = "√(" + firstNumber.join("") + ") = ";
+//       split.appendChild(prenumber);
+//       numberInp.innerHTML = sqrtresult.toString();
+//       firstNumber = [sqrtresult.toString()];
+//       secondNumber = [];
+//       clicked = false;
+//       break;
+//     case !clicked:
+//       numberInp.innerHTML = "error";
+//     default:
+//       numberInp.innerHTML = "error";
+//   }
+// });
+// button.sqr.addEventListener("click", function () {
+//   let num1 = Number(firstNumber.join(""));
+//   switch (true) {
+//     case num1 >= 0:
+//       let sqrsum = num1 * num1;
 
-      prenumber.innerHTML = "sqr (" + firstNumber.join("") + ") = ";
-      split.appendChild(prenumber);
-      numberInp.innerHTML = sqrsum.toString();
-      firstNumber = [sqrsum.toString()];
-      secondNumber = [];
-      clicked = false;
-      break;
-    default:
-      numberInp.innerHTML = "error";
-      break;
-  }
-});
+//       prenumber.innerHTML = "sqr (" + firstNumber.join("") + ") = ";
+//       split.appendChild(prenumber);
+//       numberInp.innerHTML = sqrsum.toString();
+//       firstNumber = [sqrsum.toString()];
+//       secondNumber = [];
+//       clicked = false;
+//       break;
+//     default:
+//       numberInp.innerHTML = "error";
+//       break;
+//   }
+// });
 button.percent.addEventListener("click", function () {
   let num1 = Number(firstNumber.join(""));
   switch (true) {
