@@ -1,44 +1,67 @@
-const buttonIds = [
-  "clear",
-  "delete",
-  "exponent",
-  "divide",
-  "seven",
-  "eight",
-  "nine",
-  "multiply",
-  "four",
-  "five",
-  "six",
-  "minus",
-  "one",
-  "two",
-  "three",
-  "plus",
-  "zero",
-  "equal",
-  "dot",
-  "split",
-  "radic",
-  "sqr",
-  "dot",
-  "percent",
-  "equal"
-];
-const button = {};
-buttonIds.forEach((id) => {
-  button[id] = document.getElementById(id);
-});
+
+const buttonCont = document.querySelector(".buttons");
+const lightDark = document.querySelector(".light-dark");
+
 const split = document.getElementById("split");
 const prenumber = document.createElement("p");
 const numberInp = document.getElementById("number");
-prenumber.style.color = "hsl(0,0%,80%)";
+prenumber.style.color = "var(--prenumber-text)";
 
+
+const setTheme=(theme)=> {
+  document.documentElement.style.colorScheme=theme;
+  
+  
+  if(theme === 'dark'){
+    document.documentElement.style.colorScheme='dark';
+    lightDark.innerHTML = "Light Mode"
+  }
+  else{
+    lightDark.innerHTML = "Dark Mode"
+  }
+  localStorage.setItem('theme',theme);
+}
+
+const loadTheme=()=>{
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme){
+    setTheme(savedTheme);
+  }
+};
+lightDark.addEventListener("click",(event)=>{
+  if(!event.target.matches("button")) return;
+  let value = event.target.innerHTML;
+  if (value === "Light Mode"){
+    setTheme('light')
+    // event.target.innerHTML = "Dark Mode"
+  }
+  else if (value === "Dark Mode"){
+    setTheme('dark')
+    // event.target.innerHTML = "Light Mode"
+  }
+});
+loadTheme();
+
+let justCalced=false;
 let clicked = false;
-var firstNumber = [];
-var secondNumber = [];
+let firstNumber = [];
+let secondNumber = [];
+let operator;
 
+function equalState(sum){
+  firstNumber=[sum];
+  secondNumber=[];
+  operator="";
+  clicked = false;
+  
+}
 function numberButtonClick(number) {
+  if(justCalced){
+    firstNumber=[];
+    numberInp.innerHTML=firstNumber;
+  }
+  justCalced=false;
+
   if (!clicked) {
     firstNumber.push(number);
     numberInp.innerHTML = firstNumber.join("");
@@ -48,195 +71,185 @@ function numberButtonClick(number) {
   }
 }
 function operatorButtonClick(op) {
+  
   if (!clicked) {
     operator = op;
-    switch (operator) {
-      case "+":
-      case "-":
-      case "÷":
-      case "*":
-        prenumber.innerHTML = firstNumber.join("") + " " + operator;
+        if(justCalced){
+            justCalced=false;
+          }
+        prenumber.innerHTML = firstNumber.join("") + " " + op;
         split.appendChild(prenumber);
         numberInp.innerHTML = "";
         clicked = true;
-        break;
-    }
+      
   }
 }
 
-button.one.addEventListener("click", function () {
-  numberButtonClick("1");
-});
-
-button.two.addEventListener("click", function () {
-  numberButtonClick("2");
-});
-
-button.three.addEventListener("click", function () {
-  numberButtonClick("3");
-});
-
-button.four.addEventListener("click", function () {
-  numberButtonClick("4");
-});
-
-button.five.addEventListener("click", function () {
-  numberButtonClick("5");
-});
-
-button.six.addEventListener("click", function () {
-  numberButtonClick("6");
-});
-
-button.seven.addEventListener("click", function () {
-  numberButtonClick("7");
-});
-
-button.eight.addEventListener("click", function () {
-  numberButtonClick("8");
-});
-
-button.nine.addEventListener("click", function () {
-  numberButtonClick("9");
-});
-button.dot.addEventListener("click", function () {
-  numberButtonClick(".");
-});
-button.zero.addEventListener("click", function () {
-  numberButtonClick("0");
-});
-
-button.clear.addEventListener("click", function () {
-  firstNumber.splice(0);
-  secondNumber.splice(0);
-  clicked = false;
-  numberInp.innerHTML = firstNumber;
-  prenumber.innerHTML = secondNumber;
-});
-
-button.radic.addEventListener("click", function () {
-  let num1 = Number(firstNumber.join(""));
-  switch (true) {
-    case num1 >= 0:
-      let sqrtresult = Math.sqrt(num1);
-      prenumber.innerHTML = "√(" + firstNumber.join("") + ") = ";
-      split.appendChild(prenumber);
-      numberInp.innerHTML = sqrtresult.toString();
-      firstNumber = [sqrtresult.toString()];
-      secondNumber = [];
-      clicked = false;
-      break;
-    case !clicked:
-      numberInp.innerHTML = "error";
-    default:
-      numberInp.innerHTML = "error";
-  }
-});
-button.sqr.addEventListener("click", function () {
-  let num1 = Number(firstNumber.join(""));
-  switch (true) {
-    case num1 >= 0:
-      let sqrsum = num1 * num1;
-
-      prenumber.innerHTML = "sqr (" + firstNumber.join("") + ") = ";
-      split.appendChild(prenumber);
-      numberInp.innerHTML = sqrsum.toString();
-      firstNumber = [sqrsum.toString()];
-      secondNumber = [];
-      clicked = false;
-      break;
-    default:
-      numberInp.innerHTML = "error";
-      break;
-  }
-});
-button.percent.addEventListener("click", function () {
-  let num1 = Number(firstNumber.join(""));
-  switch (true) {
-    case num1 >= 0:
-      let percentsum = 0.01 * num1;
-      prenumber.innerHTML = percentsum.toString();
-      firstNumber = [percentsum.toString()];
-      secondNumber = [];
-      numberInp.innerHTML = firstNumber;
-      firstNumber = [];
-      clicked = false;
-      break;
-    default:
-      numberinp.innerHTML = "error";
-  }
-});
-
-button.equal.addEventListener("click", function () {
-  let num1 = Number(firstNumber.join(""));
-  let num2 = Number(secondNumber.join(""));
+buttonCont.addEventListener("click",(event)=>{
+  if(!event.target.matches("button")) return;
+  const value = event.target.innerText;
+  let num1;
+  let num2;
   let sum;
-  switch (operator) {
-    case "+":
-      sum = num1 + num2;
-      break;
-    case "-":
-      sum = num1 - num2;
-      break;
-    case "*":
-      sum = num1 * num2;
-      break;
-    case "÷":
-      sum = num1 / num2;
-      break;
-    default:
-      sum = "error";
-  }
-  prenumber.innerHTML = num1 + " " + operator + " " + num2 + " " + "=";
-  numberInp.innerHTML = sum.toString();
-});
-button.plus.addEventListener("click", function () {
-  operatorButtonClick("+");
-});
-button.minus.addEventListener("click", function () {
-  operatorButtonClick("-");
-});
-button.multiply.addEventListener("click", function () {
-  operatorButtonClick("*");
-});
-button.divide.addEventListener("click", function () {
-  operatorButtonClick("÷");
+  
+  switch (value) {
+      case"1":
+      case"2":
+      case"3":
+      case"4":
+      case"5":
+      case"6":
+      case"7":
+      case"8":
+      case"9":
+      case"0":
+        numberButtonClick(value);
+        break;
+        case".":
+        if(!clicked){
+          if(!firstNumber.includes(".")){
+            numberButtonClick(value);
+          }
+        }
+        else{
+          if(!secondNumber.includes(".")){
+            numberButtonClick(value);
+          }
+        }
+        break;
+      case "+":
+        operatorButtonClick("+");
+        break;
+      case "-":
+        operatorButtonClick("-");
+        break;
+      case "x":
+        operatorButtonClick("*");
+        break;
+      case "/":
+        operatorButtonClick("/");
+        break;
+      case "=":
+        if(!operator){
+          sum = "error";
+          break;
+        }
+        num1 = Number(firstNumber.join(""));
+        num2 = Number(secondNumber.join(""));
+        
+        switch (operator) {
+          case "+":
+            sum = num1 + num2;
+            break;
+          case "-":
+            sum = num1 - num2;
+            break;
+          case "*":
+            sum = num1 * num2;
+            break;
+          case "÷":
+            if(num2!=0){
+            sum = num1 / num2;
+            }else{sum="Error"}
+            break;
+          default:
+            sum = "error";
+        }
+          sum=sum.toString()
+          prenumber.innerHTML = num1 + " " + operator + " " + num2 + " " + "=";
+          numberInp.innerHTML = sum;
+          equalState(sum);
+          justCalced=true;
+        break;
+        case "AC":
+        firstNumber.splice(0);
+        secondNumber.splice(0);
+        clicked = false;
+        justCalced=false;
+        operator="";
+        numberInp.innerHTML = "";
+        prenumber.innerHTML = "";
+        break;
+      case "%":
+        if(!clicked){
+          num1 = Number(firstNumber.join(""));
+        switch (true) {
+          case num1 >= 0:
+            let percentsum = 0.01 * num1;
+            prenumber.innerHTML = percentsum.toString();
+            firstNumber = [percentsum.toString()];
+            secondNumber = [];
+            numberInp.innerHTML = firstNumber.join("");
+            clicked = false;
+            break;
+          default:
+            numberInp.innerHTML = "error";
+        }
+        justCalced=true;
+        }else{
+        num2 = Number(secondNumber.join(""));
+        switch (true) {
+          case num2 >= 0:
+            let percentsum = 0.01 * num2;
+            
+            secondNumber = [percentsum.toString()]
+            numberInp.innerHTML = secondNumber.join("");
+            break;
+          default:
+            numberInp.innerHTML = "error";
+        }
+      }
+        break;
+      case "C":
+        if (!clicked) {
+          firstNumber.pop();
+          numberInp.innerHTML = firstNumber.join(``);
+         
+        } else if (clicked) {
+          secondNumber.pop();
+          numberInp.innerHTML = secondNumber.join(``);
+          
+        }
+        break;
+
+    }
 });
 
-button.delete.addEventListener("click", function () {
-  if (!clicked) {
-    firstNumber.pop();
-    firstNumber = firstNumber.join(``);
-    number.innerHTML = firstNumber;
-    firstNumber = firstNumber.split("");
-  } else if (clicked) {
-    secondNumber.pop();
-    secondNumber = secondNumber.join(``);
-    number.innerHTML = secondNumber;
-    secondNumber = secondNumber.split("");
-  }
-});
-// calculator();
 
-// function calculator() {
-//   operator = (prompt("What do you want to do?  '+', '-', '/', '*'"));
-//   result = mathy(operator)
-//   console.log(result);
-// }
-// function mathy(operator) {
-//   switch (operator) {
-//     case "+":
-//       result = num1 + num2;
+
+// button.radic.addEventListener("click", function () {
+//   let num1 = Number(firstNumber.join(""));
+//   switch (true) {
+//     case num1 >= 0:
+//       let sqrtresult = Math.sqrt(num1);
+//       prenumber.innerHTML = "√(" + firstNumber.join("") + ") = ";
+//       split.appendChild(prenumber);
+//       numberInp.innerHTML = sqrtresult.toString();
+//       firstNumber = [sqrtresult.toString()];
+//       secondNumber = [];
+//       clicked = false;
 //       break;
-//     case "-":
-//       result = num1 - num2;
+//     case !clicked:
+//       numberInp.innerHTML = "error";
+//     default:
+//       numberInp.innerHTML = "error";
+//   }
+// });
+// button.sqr.addEventListener("click", function () {
+//   let num1 = Number(firstNumber.join(""));
+//   switch (true) {
+//     case num1 >= 0:
+//       let sqrsum = num1 * num1;
+
+//       prenumber.innerHTML = "sqr (" + firstNumber.join("") + ") = ";
+//       split.appendChild(prenumber);
+//       numberInp.innerHTML = sqrsum.toString();
+//       firstNumber = [sqrsum.toString()];
+//       secondNumber = [];
+//       clicked = false;
 //       break;
-//     case "/":
-//       result = num1 / num2;
-//       break;
-//     case "*":
-//       result = num1 * num2;
+//     default:
+//       numberInp.innerHTML = "error";
 //       break;
 //   }
-//   return result;
-// }
+// });
