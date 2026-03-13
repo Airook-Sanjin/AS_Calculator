@@ -32,7 +32,7 @@ buttonIds.forEach((id) => {
 const split = document.getElementById("split");
 const prenumber = document.createElement("p");
 const numberInp = document.getElementById("number");
-prenumber.style.color = "hsl(0,0%,80%)";
+prenumber.style.color = "var(--prenumber-text)";
 
 let clicked = false;
 var firstNumber = [];

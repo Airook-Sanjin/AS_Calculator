@@ -4,71 +4,88 @@
     
 }
 body{
-    background-color:hsl(0, 0%, 80%);
+    background-color:hsl(0, 0%, 0%);
+}
+:root{
+    --background-color:light-dark(white,black);
+    --text-color:light-dark(black,white);
+    --button: light-dark(#e0e0e0,#333 );
+    --button-text:light-dark(hsl(0, 0%, 100%),rgb(0, 0, 0));
+    --prenumber-text:light-dark(hsl(0,0%,20%),hsl(0,0%,80%))
 }
 
+@font-face {
+  font-family: Ndot57;
+  src: url("/public/font/Ndot57-Regular.otf");
+}
+@font-face {
+  font-family: Ntype82;
+  src: url("/public/font/NType82-Regular.otf");
+}
+@font-face {
+  font-family: Inter-reg;
+  src: url("/public/font/Inter-Regular.ttf");
+}
+body{
+    background-color: var(--background-color);
+}
 .container{
-    display:flex ;
-    flex-direction: column;
-    margin:  1.25rem auto;
-    width: 19.25rem;
-    height:100%;
-    border-radius: 20px;
-    background-color: hsl(0, 0%, 27%);
-    border: solid .15rem hsl(0, 0%, 36%,.5);
-    overflow: hidden;
-    padding: 1rem;
-    gap: 1rem;
+    
+    height:100svh;
+    
 }
 
 .header{
     display: flex;
     width: 100%;
-    color: hsl(43, 50%, 90%);
-    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text-color);
+    font-family: Ndot82;
 }
 
 .screen{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content:flex-end;
+    align-items: end;
     background-color: hsl(0, 0%, 47%, .5);
-    height: 7rem;
-    color: hsl(43, 50%, 90%);
-    font-family: Arial, Helvetica, sans-serif;
+    height: 30svh;
+    color: var(--text-color);
+    font-family: Ndot57;
     font-size: 25px;
 }
 
 .buttons{
+    height: 66svh;
+    /* width: 100vw; */
     display: flex;
     flex-direction: column;
-    gap:.20rem;
-    /* padding:.20rem;  */
+    align-items: center;
+    gap:.50rem;
+    padding:1rem; 
 }
 .buttons button{
-    font-family: Arial, Helvetica, sans-serif;
+    min-width: 4rem;
+    min-height: 4rem;
+    width:100%;
+    max-width: 16rem;
+    max-height: 16rem;
+
+    font-family: Inter-reg;
     font-size: 25px;
-    font-weight: 600;
+    /* font-weight: 600; */
     background-color: hsl(105, 2%, 45%);
-    color:hsl(43, 50%, 10%);
+    border-radius: 60%;
+    color:var(--button-text);
 }
 
-.row1, .row2, .row3, .row4, .row5, .row6{
+.rows{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex:1 1;
+    width: 100%;
     gap:.20rem;
 }
-.row1 button{
-    
-    width: 6rem;
-    height: 4rem;
-}
-.row2 button, .row3 button, .row4 button, .row5 button, .row6 button{
-    
-    width: 4rem;
-    height: 4rem;
+.rows .operator{
+    background-color: hsl(0, 99%, 40%);
 }
 
 button:hover{
@@ -76,4 +93,38 @@ button:hover{
 }
 button:active{
     background-color: hsl(105, 2%, 65%);
+}
+
+@media (min-width: 1024px) {
+    .container{
+    display:flex ;
+    flex-direction: column;
+    margin:  1.25rem auto;
+    width: 40svh;
+    height:100%;
+    border-radius: 20px;
+    
+    border: solid .15rem hsl(0, 0%, 36%,.5);
+    overflow: hidden;
+    padding: 1rem;
+    gap: 1rem;
+}
+.screen{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 7rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+}
+.buttons{
+    display: flex;
+    flex-direction: column;
+    gap:.20rem;
+    /* padding:.20rem;  */
+}
+    .buttons button{
+        color:green;
+    }
 }
