@@ -16,15 +16,15 @@ body{
 
 @font-face {
   font-family: Ndot57;
-  src: url("/public/font/Ndot57-Regular.otf");
+  src: url("/public/fonts/Ndot57-Regular.otf");
 }
 @font-face {
   font-family: Ntype82;
-  src: url("/public/font/NType82-Regular.otf");
+  src: url("/public/fonts/NType82-Regular.otf");
 }
 @font-face {
   font-family: Inter-reg;
-  src: url("/public/font/Inter-Regular.ttf");
+  src: url("/public/fonts/Inter-Regular.ttf");
 }
 body{
     background-color: var(--background-color);
